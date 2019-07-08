@@ -116,4 +116,21 @@ class ApplicationError
     {
         return $this->source;
     }
+
+    public function toArray(): array
+    {
+        $array = [
+            'id'     => $this->id,
+            'status' => $this->status,
+            'code'   => $this->errorCode,
+            'title'  => $this->title,
+            'detail' => $this->detail,
+        ];
+
+        if ($this->source) {
+            $array['source'] = $this->source;
+        }
+
+        return $array;
+    }
 }
