@@ -24,12 +24,12 @@ class ProductCreateRequestResolverTest extends TestCase {
     {
         $this->expectException(ApiException::class);
 
-        $body = json_encode([]);
+        $body = [];
 
         $request = $this->createMock(Request::class);
         $request
             ->expects($this->once())
-            ->method('getBody')
+            ->method('getParsedBody')
             ->willReturn($body);
 
         try {
@@ -52,12 +52,12 @@ class ProductCreateRequestResolverTest extends TestCase {
     {
         $this->expectException(ApiException::class);
 
-        $body = json_encode(['data' => []]);
+        $body = ['data' => []];
 
         $request = $this->createMock(Request::class);
         $request
             ->expects($this->once())
-            ->method('getBody')
+            ->method('getParsedBody')
             ->willReturn($body);
 
         try {
@@ -88,17 +88,17 @@ class ProductCreateRequestResolverTest extends TestCase {
     {
         $this->expectException(ApiException::class);
 
-        $body = json_encode([
+        $body = [
             'data' => [
                 'display_name' => "",
                 'cost'         => "",
             ]
-        ]);
+        ];
 
         $request = $this->createMock(Request::class);
         $request
             ->expects($this->once())
-            ->method('getBody')
+            ->method('getParsedBody')
             ->willReturn($body);
 
         try {
@@ -140,17 +140,17 @@ class ProductCreateRequestResolverTest extends TestCase {
     {
         $this->expectException(ApiException::class);
 
-        $body = json_encode([
+        $body = [
             'data' => [
                 'display_name' => "PRODUCT 1",
                 'cost'         => $cost,
             ]
-        ]);
+        ];
 
         $request = $this->createMock(Request::class);
         $request
             ->expects($this->once())
-            ->method('getBody')
+            ->method('getParsedBody')
             ->willReturn($body);
 
         try {

@@ -18,7 +18,7 @@ class ProductCreateRequestResolver {
      */
     public function resolve(Request $request): array
     {
-        $data = json_decode($request->getBody(), true);
+        $data = $request->getParsedBody();
 
         if (false === isset($data['data'])) {
             $error = ApplicationErrorFactory::create(
@@ -30,6 +30,7 @@ class ProductCreateRequestResolver {
             );
             $this->checkForErrors([$error]);
         }
+
 
         $requiredFields = [
             'display_name',
@@ -43,8 +44,8 @@ class ProductCreateRequestResolver {
                     'ERR-1',
                     'Required Field',
                     "Required field '{$field}' is missing.",
-                    400,  
-                    ['pointer' => '/data']    
+                    400,
+                    ['pointer' => '/data']
                 );
             }
         }
@@ -57,25 +58,25 @@ class ProductCreateRequestResolver {
                     'ERR-2',
                     'Required Field',
                     "Required field '{$field}' is empty.",
-                    400,  
-                    ['pointer' => "/data/{$field}"]    
+                    400,
+                    ['pointer' => "/data/{$field}"]
                 );
             }
         }
 
         $this->checkForErrors($errors);
 
-        if (false == preg_match('/^[0-9]+(?:\.[0-9]{1,2})?$/', $data['data']['cost'])) { 
+
+        if (false == preg_match('/^[0-9]+(?:\.[0-9]{1,2})?$/', $data['data']['cost'])) {
             $error = ApplicationErrorFactory::create(
                 'ERR-3',
                 'Invalid Format',
                 'Field \'cost\' has an invalid format.',
-                400,  
-                ['pointer' => '/data/cost']    
+                400,
+                ['pointer' => '/data/cost']
             );
-            $this->checkForErrors([$error]); 
-        } 
-
+            $this->checkForErrors([$error]);
+        }
 
         return $data;
     }
