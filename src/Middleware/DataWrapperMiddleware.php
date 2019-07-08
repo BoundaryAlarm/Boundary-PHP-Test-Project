@@ -2,6 +2,9 @@
 
 namespace BoundaryWS\Middleware;
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
 class DataWrapperMiddleware {
     /** 
      * Wraps success responses with data key
@@ -12,7 +15,7 @@ class DataWrapperMiddleware {
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function __invoke($request, $response, $next)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
     {
         if (false === in_array($response->getStatusCode(), [200, 201])) {
             return $response;
